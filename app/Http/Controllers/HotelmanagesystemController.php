@@ -16,10 +16,9 @@ use DB;
 class HotelmanagesystemController extends Controller
 {
 
-    public function login(Request $request){
-           
-
-    }
+    // public function __construct(){
+    //     $this->middleware('auth');
+    // }
     //1,添加订房信息 接口
     public function bookroomin(Request $request)
     {
@@ -40,11 +39,6 @@ class HotelmanagesystemController extends Controller
          return "预定成功";
       
     } 
-    public function showBookRoomPage(){
-        View::addExtension('html','php');
-        return view('binguan/reserveInfMa/blank');
-    }
-
 
     //2.添加客房标准 接口
     public function roomsave(Request $request){
@@ -67,10 +61,6 @@ class HotelmanagesystemController extends Controller
            return '添加成功！';
     } 
 
-     public function showRoomin(){
-         return view('binguan/addRoomStd/blank');
-
-     }
     //3.添加客人入住信息 接口
     public function addguestin(Request $request){
         $this->validate($request,[
@@ -117,7 +107,8 @@ class HotelmanagesystemController extends Controller
           
            
            DB::update('update room set status=1 where room_id =?',[$roomguest->room_id]);
-          
+           //删除bookroom表单里的数据
+           DB::delete('delete from bookroom where telephone=?',[$request->telephone]);
            return '办理成功';
            
            
@@ -128,20 +119,29 @@ class HotelmanagesystemController extends Controller
         $this->validate($request,[
             'name'=>'required',
             'id_number'=>'required|min:18|max:18',
-            'telephone'=>'required|min:11|max:11',
+            'telephone'=>'required|min:11|max:15',
             'sex'=>'required',
-            'type'=>'required',
+           
           ]);
+          $vip=Guest::where('id_number',$request->id_number);
+          if($vip->get()->isEmpty()){
            $guest=new Guest;
            $guest->name=$request->name;
            $guest->telephone=$request->telephone;
            $guest->id_number=$request->id_number;
-           $guest->sex=$requst->sex;
-           $guest->type=$request->type;
+           $guest->sex=$request->sex;
+           $guest->type='散客';
            $guest->vip=1;
            $guest->save();
-           
-           return "1";
+           return  "VIP添加成功！";
+          }else{
+               $re = $vip->first();
+               $re->vip='1';
+               $re->save();
+              return "VIP办理成功！";
+
+          }
+   
        }
        //5.查询所有客房
        public function checkRoom(){
@@ -149,6 +149,7 @@ class HotelmanagesystemController extends Controller
            $result=DB::table('room')->orderBy('status','desc')->get();
            return json_encode($result);
        }
+       //获得客房状态
         public function getRoomStatus(){
             $result=DB::select('select room_id,type,status from room where status=?',['0']);
             return json_encode($result);
@@ -164,7 +165,7 @@ class HotelmanagesystemController extends Controller
           $do=$request->oper;
           if($do=='edit'){
              $this->validate($request,[
-              'room_id'=>'required|unique:room',
+              'room_id'=>'required',
               'type'=>'required',
               'location'=>'required|string',
               'price'=>'required',
@@ -202,23 +203,65 @@ class HotelmanagesystemController extends Controller
           if($result) return "1";
 
       }
-      //10 退房之后结算 接口
-      public function dobalance(Request $request){
+      //10 办理结算时获得订单信息 接口
+      public function getBalRoomGuest(Request $request){
             //need order_number
-            $order_number=$request->order_number;
-            $res=App\Roomguest::where('order_number',$order_number)->get();
+            $room_id=$request->room_id;
+            $res=DB::table('roomguest')
+                         ->join('room','roomguest.room_id','=','room.room_id')
+                         ->join('guest','roomguest.id_number','=','guest.id_number')
+                         ->select('roomguest.*','guest.name','guest.vip','guest.type','guest.telephone','guest.sex' ,'room.type as room_type','room.location','room.price','room.remark')
+                         ->where('roomguest.status','1') ->where('roomguest.room_id',$room_id)   
+                         ->get();
+           
             return json_encode($res);
+      }
+      public function doBalance(Request $request){
+               $this->validate($request,[
+                   'order_number'=>'required',
+                   'type'=>'required',
+                   'deposit'=>'required|integer',
+                   'balance1'=>'required|integer',
+                   'balance2'=>'required|integer',
+               ]);
+                $bal=Balance::where('order_number',$request->order_number); 
+               if($bal->get()->isEmpty()){
+                    $balance=new Balance;
+                    $balance->order_number=$request->order_number;
+                    $balance->type=$request->type;
+                    $balance->deposit=$request->deposit;
+                    $balance->balance1=$request->balance1;
+                    $balance->balance2=$request->balance2;
+                    $balance->time=date("Y-m-d H:i:s");
+                    $balance->save();
+
+                    $status=Roomguest::where('order_number',$request->order_number)->get();
+                    $star=$status->first();
+                    $star->status='0';
+                    $star->save();
+                    
+                    return "结算成功！";
+               }else {
+                   return "重复结算！";
+                   }
+              
+                           
       }
       //11 查询客户是否为VIP 接口
       public function isVip(Request $request){
           // need id_number
           $id_number=$request->id_number;
-          $res=App/Guest::where('id_number',$id_number)->get();
+          $res=Guest::where('id_number',$id_number)->get();
           $ans=$res->vip;
           if($ans=='1'){
               return '1';
           }elseif($ans=='0') return '0';
 
+      }
+      public function getGuestMs(Request $request){
+         $id_number=$request->id_number;
+          $res=Guest::where('id_number',$id_number)->where('vip','0')->get();
+          return json_encode($res);
       }
       public function alterroomguest(Request $request){
           $do=$request->oper;

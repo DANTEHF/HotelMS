@@ -33,7 +33,14 @@ Route::get('getroomguest','HotelmanagesystemController@allroomguest');
 Route::post('alterroomms','HotelmanagesystemController@changeRoomMes');
 //修改订单信息
 Route::post('alterroomguest','HotelmanagesystemController@alterroomguest');
-
+//获得客户信息 路由
+Route::post('getguestms','HotelmanagesystemController@getGuestMs');
+//添加vip路由
+Route::post('addnewvip','HotelmanagesystemController@addvip');
+//获取结算时订单信息路由
+Route::post('getbalanceroomguest','HotelmanagesystemController@getBalRoomGuest');
+//结算路由
+Route::post('dobalance','HotelmanagesystemController@doBalance');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

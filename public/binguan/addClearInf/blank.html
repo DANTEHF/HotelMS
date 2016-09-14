@@ -525,6 +525,14 @@
 
 								<b class="arrow"></b>
 							</li>
+								<li class="" id="2-5">
+								<a href="../addVIP/blank.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									贵宾VIP办理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
 
@@ -607,7 +615,7 @@
 							</li>
 
 							<li>
-								<a href="#">添加订房信息</a>
+								<a href="#">办理客人入住</a>
 							</li>
 						</ul><!-- /.breadcrumb -->
 
@@ -937,7 +945,7 @@
 					url:"../../index.php/addguestinms",
 					data:$("#book_rome").serialize(),
 					success:function(data){
-						
+						alert(data);
 					}
 				});
 			})
