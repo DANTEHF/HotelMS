@@ -16,7 +16,7 @@ class CreateBalanceTable extends Migration
          Schema::create('balance', function (Blueprint $table) {
             $table->increments('id');
            
-            $table->integer('order_number');
+            $table->string('order_number')->index()->unique();
             $table->string('type',4);
             $table->integer('deposit');
             $table->integer('balance1');

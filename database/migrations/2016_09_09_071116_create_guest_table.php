@@ -20,7 +20,7 @@ class CreateGuestTable extends Migration
             $table->string('name',6);
             $table->string('sex',2);
             $table->string('type',2);
-            $table->string('telephone');
+            $table->string('telephone',15);
             $table->integer('vip');
             $table->index('id_number')->unique();
            

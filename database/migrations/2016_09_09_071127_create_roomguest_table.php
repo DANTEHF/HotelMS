@@ -18,7 +18,7 @@ class CreateRoomguestTable extends Migration
             
              $table->string('order_number');
              $table->index('order_number')->unique();
-             $table->string('room_id');
+             $table->string('room_id',12);
              $table->string('id_number',18);
              $table->dateTime('in_time');
              $table->dateTime('out_time');

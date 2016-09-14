@@ -17,9 +17,9 @@ class CreateBookroomTable extends Migration
            $table->increments('id');
             
             $table->string('name',6);
-            $table->integer('telephone');
-            $table->dateTime('booktime');
-            $table->string('room_id');
+            $table->string('telephone',15);
+            $table->date('booktime');
+            $table->string('room_id',12);
             
          });
     }
