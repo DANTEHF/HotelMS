@@ -1,0 +1,8 @@
+[0914/133755:FATAL:CefClientHandler.cpp(161)] Check failed: CefCurrentlyOn(TID_UI). 
+
+Backtrace:
+	cef_time_to_timet [0x59FBE0F7+789303]
+	cef_time_to_timet [0x59F89B11+574801]
+	cef_log [0x59ECCB47+55]
+	(No symbol) [0x00526717]
+
