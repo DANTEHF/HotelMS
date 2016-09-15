@@ -555,8 +555,8 @@
 
 								<b class="arrow"></b>
 							</li>
-<!--
-							<li class="" id="3-2">
+
+							<!--<li class="" id="3-2">
 								<a href="../changePassword/blank.html">
 									<i class="menu-icon fa fa-caret-right"></i>
 									修改密码
@@ -611,11 +611,11 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">订房信息管理</a>
+								<a href="#">系统管理</a>
 							</li>
 
 							<li>
-								<a href="#">添加订房信息</a>
+								<a href="#">用户管理</a>
 							</li>
 						</ul><!-- /.breadcrumb -->
 
@@ -727,11 +727,28 @@
 						<div class="row">
 							<div class="col-xs-12">
 <!-- 这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签 -->
-								<form class="form-horizontal" role="form" id="book_rome">
+								<!--<form class="form-horizontal" role="form" id="addVIP">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="id_number"> 客人id号 </label>
+										<div class="col-sm-9">
+											<input type="text" id="id_number" name="id_number" placeholder="客人id号" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="name"> 客人名字 </label>
 										<div class="col-sm-9">
 											<input type="text" id="name" name="name" placeholder="客人名字" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="sex"> 性别 </label>
+										<div class="col-sm-9">
+											<select class="col-xs-10 col-sm-5" id="sex" name="sex">
+												<option value='男'>男</option>
+												<option value='女'>女</option>
+
+						                    </select>
+											<input type="text" id="sex2" name="sex2" placeholder="性别" style="display:none" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -745,42 +762,9 @@
 											</div>
                 						</div>
             						</div>
-									
-									<div class="form-group">
-									 	<label class="col-sm-3 control-label no-padding-right" for="booktime"> 预定时间 </label>
-                						<div class="col-sm-9">
-                    						<div class="input-group col-xs-5">
-                        						<input class="form-control date-picker" placeholder="预定时间" id="booktime" name="booktime" type="text" data-date-format="yyyy-mm-dd" />
-                            					<span class="input-group-addon ">
-							    					<i class="fa fa-calendar bigger-110"></i>
-												</span>
-                    						</div>
-                						</div>
-            						</div>
-            						<!--<div class="form-group">
-									 	<label class="col-sm-3 control-label no-padding-right" for="in_time"> 入住时间 </label>
-                						<div class="col-sm-9">
-                    						<div class="input-group col-xs-5">
-                        						<input class="form-control date-picker" placeholder="入住时间" id="in_time" name="in_time" type="text" data-date-format="yyyy-mm-dd" />
-                            					<span class="input-group-addon ">
-							    					<i class="fa fa-calendar bigger-110"></i>
-												</span>
-                    						</div>
-                						</div>
-            						</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="nights"> 入住时长 </label>
-										<div class="col-sm-9">
-											<input type="text" id="nights" name="nights" placeholder="入住时长" class="col-xs-10 col-sm-5" />
-										</div>
-									</div>-->
-									<div class="form-group">
-                						<label class="col-sm-3 control-label no-padding-right" for="room_id"> 房间编号 </label>
-                						<div class="col-sm-9">
-                    						<select class="col-xs-10 col-sm-5" id="room_id" name="room_id">
-						                    </select>
-                						</div>
-            						</div>
+							
+            					
+							
 								
 									
 									<div class="clearfix form-actions">
@@ -797,7 +781,7 @@
                     						&nbsp; &nbsp; &nbsp;
 						                </div>
             						</div>
-								</form>
+								</form>-->
 <!-- 这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签-->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -877,33 +861,58 @@
 		<script src="../assets/js/bootstrap-tag.js"></script>
 		<script>
 			$(document).ready(function(){
-				$("#2").addClass("open");
-				$("#2-1").addClass("active open");
-				$.ajax({
-					type:'get',
-					url:'../../index.php/getroomstatus',
-					dataType:'json',
-					success:function(data){
-						var str;
-						var one = "<option value=\"%\">%</option>";
-						for(var i=0;i<data.length;i++)
-						{
-							str+=(one.replace("%",data[i]['room_id']).replace("%",data[i]['room_id']));
-						}
-						$("#room_id").append(str);
-					}
-				});
+				$("#3").addClass("open");
+				$("#3-1").addClass("active open");
+				// $.ajax({
+				// 	type:'get',
+				// 	url:'../../index.php/getroomstatus',
+				// 	dataType:'json',
+				// 	success:function(data){
+				// 		var str;
+				// 		var one = "<option value=\"%\">%</option>";
+				// 		for(var i=0;i<data.length;i++)
+				// 		{
+				// 			str+=(one.replace("%",data[i]['room_id']).replace("%",data[i]['room_id']));
+				// 		}
+				// 		$("#room_id").append(str);
+				// 	}
+				// });
 			})
 			$("#submit").click(function(){
 				$.ajax({
 					type:"post",
-					url:"../../index.php/bookroom",
-					data:$("#book_rome").serialize(),
+					url:"",
+					data:$("#addVIP").serialize(),
 					success:function(data){
 						alert(data);
 					}
 				});
 			})
+			// $("#").blur(function(){
+			// 	$.ajax({
+			// 		url:'../../index.php/getguestms',
+			// 		type:'post',
+			// 		data:{'id_number':$('#id_number').val()},
+			// 		dataType:'json',
+			// 		success:function(data){
+			// 			if(data==0)
+			// 			{    
+			// 				return;
+			// 			}else{
+	        //              $('#sex').hide();
+			// 			 $('#sex').attr('name','sex2');
+
+					    
+			// 			 $("#name").val(data[0].name);
+			// 		     $("#telephone").val(data[0].telephone);
+						 
+			// 			$("#sex2").val(data[0].sex).show();
+			// 			 $('#sex2').attr('name','sex');
+			// 	       }
+					
+			// 		}
+			// 	});
+			// })
 		</script>
 
 <script type="text/javascript">
