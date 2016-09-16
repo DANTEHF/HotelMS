@@ -281,9 +281,11 @@ class HotelmanagesystemController extends Controller
                     $star=$status->first();
                     $star->status='0';
                     $star->save();
-//修改房间状态
-                   // $status2=Room::where('room_id',$request);
-                    
+                   //修改房间状态
+                    $status2=Room::where('room_id',$star->room_id)->get();
+                     $alter=$status2->first();
+                     $alter->status='0';
+                     $alter->save();                    
                     return "结算成功！";
                }else {
                    return "重复结算！";
