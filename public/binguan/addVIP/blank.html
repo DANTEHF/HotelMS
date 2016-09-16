@@ -360,7 +360,7 @@
 								<img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<b id="loginname"></b>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -375,7 +375,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="#">
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
@@ -384,7 +384,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="../../index.php/logout">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
@@ -1312,20 +1312,24 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <script>
+	  function checksession(){
+		  $.ajax({
+			  type:"post",
+			  url:"../../index.php/checksession",
+			  dataType:"json",
+			  success:function(data){
+				 if(data=="2"){
+					  alert("请你先登录!");
+					  window.location.href="../login/login.html";
+				  }else {
+					  $("#loginname").text(data.session);
+				  }
+			  },
+		  });
+	  }
+	  checksession();
+	  </script>
 
 
 <!-- 这里是面板的特殊script的标签这里是面板的特殊script的标签这里是面板的特殊script的标签这里是面板的特殊script的标签这里是面板的特殊script的标签 -->

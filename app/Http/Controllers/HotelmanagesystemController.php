@@ -13,16 +13,27 @@ use App\Roomguest;
 use App\Guest;
 use View;
 use DB;
+use Session;
 class HotelmanagesystemController extends Controller
 {
 
     public function __construct(Request $request){
         //$this->middleware('auth');
-        // if($request->session->has('SESSIONID')){
-        //     return true;
-        // }else{
-        //   //  return 回登陆界面 
-        // }
+        if(Session::has('SESSIONID')){
+            return Session::get('SESSIONID');
+        }else{
+           return "2"; 
+        }
+    }
+    public function checkLogin(Request $request){
+        if(Session::has('SESSIONID')){
+            $session=Session::get('SESSIONID');
+            $permession=Session::get('PERMESSION');
+            $data=array('session'=>$session,"permession"=>$permession);
+            return json_encode($data);
+        }else{
+           return "2"; 
+        }
 
     }
     public function login(Request $request){
@@ -30,23 +41,25 @@ class HotelmanagesystemController extends Controller
             'username'=>'required',
             'password'=>'required',
         ]);
-        $res=User::where('username',$request->username)->where('password',$request->password)->get();
+        $res=User::where('user_id',$request->username)->where('password',$request->password)->get();
          if($res->isEmpty()){
              return ;
          }else{
              $perm=$res->first();
-             $request->session()->put('SESSIONID',$request->username);
-             $request->session()->put('PERMESSION',$perm->permession);
-             return $request->username;
+             Session::put('SESSIONID',$request->username);
+             Session::put('PERMESSION',$perm->permession);
+          //   Session::save();
+            return $request->username;
+             
          }
 
     }
 
     public function logout(Request $request){
 
-         $request->session()->flush();
+         Session::flush();
 
-         return  "logout";
+         return  redirect("http://localhost/hotelms/public/binguan/login/login.html");
     }
     //1,添加订房信息 接口
     public function bookroomin(Request $request)
@@ -342,15 +355,21 @@ class HotelmanagesystemController extends Controller
  
     public function create(Request $request){
         $this->validate($request,[
-            'user_id'=>'required|unique:user',
+            'user_id'=>'required',
             'password'=>'required|min:6',
             
         ]);
-        $user=new User;
-        $user->user_id=$request->user_id;
-        $user->password=$request->password;
-        $user->permession='2';
-        $user->save();
+        $find=User::where('user_id',$request->user_id)->get();
+        if($find->isEmpty()){
+           $user=new User;
+           $user->user_id=$request->user_id;
+           $user->password=$request->password;
+           $user->permession='2';
+           $user->save();
+           return "1";
+        }else return "2";
+     
 
     }
+
 }

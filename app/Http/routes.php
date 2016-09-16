@@ -11,6 +11,20 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| This route group applies the "web" middleware group to every route
+| it contains. The "web" middleware group is defined in your HTTP
+| kernel and includes session state, CSRF protection, and more.
+|
+*/
+
+Route::group(['middleware' => ['web']], function () {
+    //
 Route::get('bookroom', 'HotelmanagesystemController@showBookRoomPage');
 //预定房间路由
 Route::post('bookroom','HotelmanagesystemController@bookroomin');
@@ -41,17 +55,13 @@ Route::post('addnewvip','HotelmanagesystemController@addvip');
 Route::post('getbalanceroomguest','HotelmanagesystemController@getBalRoomGuest');
 //结算路由
 Route::post('dobalance','HotelmanagesystemController@doBalance');
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
+//登陆路由
+Route::post('login','HotelmanagesystemController@login');
+//检查session路由
+Route::post('checksession','HotelmanagesystemController@checkLogin');
 
-Route::group(['middleware' => ['web']], function () {
-    //
+//添加用户路由
+Route::post('create','HotelmanagesystemController@create');
+//退出登陆 路由
+Route::get('logout','HotelmanagesystemController@logout');
 });

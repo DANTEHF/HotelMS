@@ -360,7 +360,7 @@
 								<img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<b id="loginname"></b>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -375,7 +375,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="#">
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
@@ -384,7 +384,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="../../index.php/logout">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
@@ -727,51 +727,25 @@
 						<div class="row">
 							<div class="col-xs-12">
 <!-- 这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签 -->
-								<!--<form class="form-horizontal" role="form" id="addVIP">
+								<form class="form-horizontal" role="form" id="addUser" style="display:none" >
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="id_number"> 客人id号 </label>
+										<label class="col-sm-3 control-label no-padding-right" for="user_id"> 用户名</label>
 										<div class="col-sm-9">
-											<input type="text" id="id_number" name="id_number" placeholder="客人id号" class="col-xs-10 col-sm-5" />
+											<input type="text" id="user_id" name="user_id" placeholder="用户id" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="name"> 客人名字 </label>
+										<label class="col-sm-3 control-label no-padding-right" for="name"> password</label>
 										<div class="col-sm-9">
-											<input type="text" id="name" name="name" placeholder="客人名字" class="col-xs-10 col-sm-5" />
+											<input type="password" id="password" name="password" placeholder="password" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="sex"> 性别 </label>
-										<div class="col-sm-9">
-											<select class="col-xs-10 col-sm-5" id="sex" name="sex">
-												<option value='男'>男</option>
-												<option value='女'>女</option>
-
-						                    </select>
-											<input type="text" id="sex2" name="sex2" placeholder="性别" style="display:none" class="col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									<div class="form-group">
-                						<label class="col-sm-3 control-label no-padding-right" for="telephone"> 电话 </label>
-                						<div class="col-sm-9">
-                    						<div class="input-group">
-												<span class="input-group-addon">
-													<i class="ace-icon fa fa-phone"></i>
-												</span>
-												<input class="form-control input-mask-phone "  type="text" name="telephone"  id="telephone" style="width:316px"/>
-											</div>
-                						</div>
-            						</div>
-							
-            					
-							
-								
-									
+					
 									<div class="clearfix form-actions">
                 						<div class="col-md-offset-3 col-md-9">
                     						<button class="btn btn-info" type="button" id="submit">
                         						<i class="ace-icon fa fa-check bigger-110"></i>
-                        						提交
+                        					  添加
                     						</button>
                     						&nbsp; &nbsp; &nbsp;
                     						<button class="btn" type="reset" id="reset">
@@ -781,7 +755,9 @@
                     						&nbsp; &nbsp; &nbsp;
 						                </div>
             						</div>
-								</form>-->
+								</form>
+						<div id="show2" style="display:none"><h1>您没有权限
+								</h1></div>
 <!-- 这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签这里是面板的特殊元素的标签-->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -863,56 +839,9 @@
 			$(document).ready(function(){
 				$("#3").addClass("open");
 				$("#3-1").addClass("active open");
-				// $.ajax({
-				// 	type:'get',
-				// 	url:'../../index.php/getroomstatus',
-				// 	dataType:'json',
-				// 	success:function(data){
-				// 		var str;
-				// 		var one = "<option value=\"%\">%</option>";
-				// 		for(var i=0;i<data.length;i++)
-				// 		{
-				// 			str+=(one.replace("%",data[i]['room_id']).replace("%",data[i]['room_id']));
-				// 		}
-				// 		$("#room_id").append(str);
-				// 	}
-				// });
+	
 			})
-			$("#submit").click(function(){
-				$.ajax({
-					type:"post",
-					url:"",
-					data:$("#addVIP").serialize(),
-					success:function(data){
-						alert(data);
-					}
-				});
-			})
-			// $("#").blur(function(){
-			// 	$.ajax({
-			// 		url:'../../index.php/getguestms',
-			// 		type:'post',
-			// 		data:{'id_number':$('#id_number').val()},
-			// 		dataType:'json',
-			// 		success:function(data){
-			// 			if(data==0)
-			// 			{    
-			// 				return;
-			// 			}else{
-	        //              $('#sex').hide();
-			// 			 $('#sex').attr('name','sex2');
-
-					    
-			// 			 $("#name").val(data[0].name);
-			// 		     $("#telephone").val(data[0].telephone);
-						 
-			// 			$("#sex2").val(data[0].sex).show();
-			// 			 $('#sex2').attr('name','sex');
-			// 	       }
-					
-			// 		}
-			// 	});
-			// })
+		
 		</script>
 
 <script type="text/javascript">
@@ -1311,19 +1240,47 @@
 		</script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <script>
+	  function checksession(){
+		  $.ajax({
+			  type:"post",
+			  url:"../../index.php/checksession",
+			  dataType:"json",
+			  success:function(data){
+				 if(data=="2"){
+					  alert("请你先登录!");
+					  window.location.href="../login/login.html";
+				  }else {
+					  $("#loginname").text(data.session);
+					  if(data.permession=="2"){
+                       $("#addUser").hide();
+					   $("#show2").show();
+					  }else if(data.permession=="1"){
+					  $("#addUser").show();
+					   $("#show2").hide();
+					  }
+				  }
+			  },
+		  });
+	  }
+	  checksession();
+	  </script>
+	  <script>
+		  $("#submit").click(function(){
+			  $.ajax({
+				  type:"post",
+				  url:"../../index.php/create",
+				  data:$("#addUser").serialize(),
+				  success:function(data){
+					   if(data=="1"){
+						   alert("添加用户成功");
+					   }else if(data=="2"){
+						   alert("该用户已经是管理员，请不要重复添加！");
+					   }
+				  }
+			  })
+		  })
+		  </script>
 
 
 

@@ -357,7 +357,7 @@
 								<img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<b id="loginname"></b>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -372,7 +372,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="#">
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
@@ -381,7 +381,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="../../index.php/logout">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
@@ -902,7 +902,7 @@
 			//		data: grid_data,
 					datatype: "json",
 					height: 250,
-					colNames:[' ', '房间编号','房间类型', '客户姓名','身份证号','入住时间','退房时间','押金','备注'],
+					colNames:[' ', '房间编号','房间类型', '客户姓名','身份证号','入住时间','退房时间','押金','状态'],
 					colModel:[
 						{name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
 							formatter:'actions', 
@@ -921,7 +921,7 @@
                         {name:'in_time',index:'in_time', width:60, sorttype:"string", editable: true},
 						{name:'out_time',index:'out_time', width:60, sorttype:"string", editable: true},
 						{name:'deposit',index:'deposit', width:60, sorttype:"string", editable: true},
-						{name:'remark',index:'remark', width:60, sorttype:"string", editable: true},
+						{name:'status',index:'status', width:60, sorttype:"string", editable: true},
 					], 
 			
 					viewrecords : true,
@@ -1203,23 +1203,24 @@
 				});
 			});
 		</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <script>
+	  function checksession(){
+		  $.ajax({
+			  type:"post",
+			  url:"../../index.php/checksession",
+			  dataType:"json",
+			  success:function(data){
+				 if(data=="2"){
+					  alert("请你先登录!");
+					  window.location.href="../login/login.html";
+				  }else {
+					  $("#loginname").text(data.session);
+				  }
+			  },
+		  });
+	  }
+	  checksession();
+	  </script>
 
 
 
